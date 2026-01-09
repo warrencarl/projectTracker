@@ -13,22 +13,15 @@ class AuthController {
     }
 
     /**
-     * Show login page
+     * Handle login
      */
-    public function showLogin() {
+    public function login() {
         // Redirect to dashboard if already logged in
         if (isLoggedIn()) {
             header('Location: /index.php?action=dashboard');
             exit();
         }
         
-        require_once __DIR__ . '/../views/login.php';
-    }
-
-    /**
-     * Handle login
-     */
-    public function login() {
         $error = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -62,22 +55,15 @@ class AuthController {
     }
 
     /**
-     * Show registration page
+     * Handle registration
      */
-    public function showRegister() {
+    public function register() {
         // Redirect to dashboard if already logged in
         if (isLoggedIn()) {
             header('Location: /index.php?action=dashboard');
             exit();
         }
         
-        require_once __DIR__ . '/../views/register.php';
-    }
-
-    /**
-     * Handle registration
-     */
-    public function register() {
         $error = '';
         $success = '';
 
@@ -131,11 +117,11 @@ class AuthController {
      * Handle logout
      */
     public function logout() {
-        // Destroy session
-        session_destroy();
-        
         // Clear session variables
         $_SESSION = array();
+        
+        // Destroy session
+        session_destroy();
         
         // Redirect to login
         header('Location: /index.php?action=login');
